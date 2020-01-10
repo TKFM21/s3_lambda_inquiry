@@ -1,32 +1,90 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="style.css" />
     <title>問い合わせ</title>
-</head>
-<body>
+  </head>
+  <body>
+    <div class="header">
+      <a href="#" class="logo">Coolling Quality Controll</a>
+      <a class="active" href="#">Home</a>
+    </div>
+
     <main class="main-container">
-        <h1>問い合わせ</h1>
-        <form>
-            <label for="name">Name</label>
-            <input type="text" name="name" id="name" required>
-            <br>
-            <label for="email">E-Mail</label>
-            <input type="email" name="email" id="email" required>
-            <br>
-            <label for="body">Body</label>
-            <br>
-            <textarea name="body" id="body" cols="30" rows="10" required></textarea>
-            <br>
-            <button id="send">Send</button>
+      <h2>問い合わせフォーム</h2>
+      <div class="container">
+        <form id="form">
+          <div class="row">
+            <div class="col-20">
+              <label for="name">名前</label>
+            </div>
+            <div class="col-80">
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Your name.."
+              />
+            </div>
+          </div>
+          <div id="name-alert" class="alert-message" hidden>入力値が不正です。</div>
+          <div class="row">
+            <div class="col-20">
+              <label for="email">E-Mail</label>
+            </div>
+            <div class="col-80">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Your E-Mail.."
+              />
+            </div>
+          </div>
+          <div class="note-message">@sanyodenki.comドメインのみ有効です。</div>
+          <div id="email-alert" class="alert-message" hidden>入力値が不正です。</div>
+          <div class="row">
+            <div class="col-20">
+              <label for="dept">部署</label>
+            </div>
+            <div class="col-80">
+              <input type="text" id="dept" name="dept" placeholder="Ex: C-QC" />
+            </div>
+          </div>
+          <div id="dept-alert" class="alert-message" hidden>入力値が不正です。</div>
+          <div class="row">
+            <div class="col-20">
+              <label for="body">内容</label>
+            </div>
+            <div class="col-80">
+              <textarea
+                id="body"
+                name="body"
+                placeholder="お気軽にお問い合わせください。"
+                style="height:200px"
+              ></textarea>
+            </div>
+          </div>
+          <div id="body-alert" class="alert-message" hidden>入力値が不正です。</div>
+          <div class="row">
+            <button id="submitBtn">送信</button>
+          </div>
         </form>
-        <p id="result-ok" hidden>リクエストを受け付けました。</p>
-        <p id="result-ng" hidden>リクエストの受付に失敗しました。</p>
+      </div>
+
+      <!-- The Modal -->
+      <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <p id="result"></p>
+        </div>
+      </div>
     </main>
 
     <script src="main.js" defer></script>
-</body>
+  </body>
 </html>
