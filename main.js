@@ -1,15 +1,18 @@
-const URL =
-  "https://";
+const URL = "https://";
 
 const LOADING = "処理中...";
 const RESULT_OK = "リクエストを受け付けました。";
-const RESULT_NG =
-  "リクエストの受付に失敗しました。\nC-QCへ直接お問い合わせください。";
+const RESULT_OK_DETAIL =
+  "正常に処理が完了すると'support@cooling-qc.com'からメールが配信されます。";
+const RESULT_NG = "リクエストの受付に失敗しました";
+const RESULT_NG_DETAIL =
+  "大変申し訳ありません。C-QCへ直接お問い合わせください。";
 const SANYO_DOMAIN = "@sanyodenki.com";
 document.getElementById("email").value = SANYO_DOMAIN;
 
 (() => {
   const modal = document.getElementById("myModal");
+  const modalContent = document.getElementById("modal-content");
   const sendBtn = document.getElementById("submitBtn");
   const span = document.getElementsByClassName("close")[0];
   const result = document.getElementById("result");
@@ -18,6 +21,7 @@ document.getElementById("email").value = SANYO_DOMAIN;
   const emailAlert = document.getElementById("email-alert");
   const deptAlert = document.getElementById("dept-alert");
   const bodyAlert = document.getElementById("body-alert");
+  const resultDetail = document.getElementById("detail");
 
   const inputValueClear = () => {
     form.name.value = "";
@@ -58,13 +62,14 @@ document.getElementById("email").value = SANYO_DOMAIN;
     const dept = form.dept.value.trim();
     form.dept.value = dept;
     const body = form.body.value.trim();
-    form.body.valut = body;
+    form.body.value = body;
 
     // validation check
     if (validation(name, email, dept, body)) return;
-    
-    modal.style.display = "block";
+
     result.innerHTML = LOADING;
+    modalContent.setAttribute("class", "request-loading");
+    modal.style.display = "block";
     const jsonData = JSON.stringify({ name, email, dept, body });
 
     try {
@@ -78,10 +83,14 @@ document.getElementById("email").value = SANYO_DOMAIN;
         }
       });
       console.log("Response!!", res.status);
+      modalContent.setAttribute("class", "request-success");
       result.innerHTML = RESULT_OK;
+      resultDetail.innerHTML = RESULT_OK_DETAIL;
     } catch (error) {
       console.log(error);
+      modalContent.setAttribute("class", "request-fail");
       result.innerHTML = RESULT_NG;
+      resultDetail.innerHTML = RESULT_NG_DETAIL;
     }
   });
 
@@ -92,7 +101,7 @@ document.getElementById("email").value = SANYO_DOMAIN;
       nameAlert.hidden = false;
       validationResult = true;
     } else {
-      form.name.setAttribute("class", "");
+      form.name.setAttribute("class", "alert-green");
       nameAlert.hidden = true;
     }
     if (!email.length || !/^[^@]+@sanyodenki.com$/.test(email)) {
@@ -100,7 +109,7 @@ document.getElementById("email").value = SANYO_DOMAIN;
       emailAlert.hidden = false;
       validationResult = true;
     } else {
-      form.email.setAttribute("class", "");
+      form.email.setAttribute("class", "alert-green");
       emailAlert.hidden = true;
     }
     if (!dept.length) {
@@ -108,7 +117,7 @@ document.getElementById("email").value = SANYO_DOMAIN;
       deptAlert.hidden = false;
       validationResult = true;
     } else {
-      form.dept.setAttribute("class", "");
+      form.dept.setAttribute("class", "alert-green");
       deptAlert.hidden = true;
     }
     if (!body.length) {
@@ -116,7 +125,7 @@ document.getElementById("email").value = SANYO_DOMAIN;
       bodyAlert.hidden = false;
       validationResult = true;
     } else {
-      form.body.setAttribute("class", "");
+      form.body.setAttribute("class", "alert-green");
       bodyAlert.hidden = true;
     }
     return validationResult;
